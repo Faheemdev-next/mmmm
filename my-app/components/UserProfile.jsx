@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserProfile = () => {
+const UserProfile = ({user}) => {
   
   return (
     <div className='flex items-center gap-3'>
@@ -11,7 +11,7 @@ const UserProfile = () => {
   </div>
 </div> 
 <div className='flex flex-col gap-1'>
-    <h2>@404faheem</h2>
+    <h2>{user.username}</h2>
     <h3 onClick={()=>document.getElementById('my_modal_2').showModal()}>Add Bio</h3>
 </div>
 <div>

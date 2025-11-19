@@ -1,12 +1,13 @@
 import LinkPage from "@/components/LinkPage";
+import { getInitialUser } from "@/lib/getInitialUser";
+import { getUserProfile } from "@/lib/getUserProfile";
 import UserProfile from "@/models/UserProfile";
 import React from "react";
 
 const LinksManagePage = async () => {
-  const Fake_username = "bhatfaheem";
+  const userInitial = await getInitialUser()
+  const user = await getUserProfile(userInitial.email)
 
-  // ✅ Use lean() to avoid circular refs
-  const user = await UserProfile.findOne({ username: Fake_username }).lean();
 
   return (
     <div>

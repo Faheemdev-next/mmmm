@@ -35,11 +35,11 @@ export async function DELETE(req) {
 export async function POST(req){
     const body = await req.json()
     const {user} = body
-    console.log(user);
-    const Fake_username = 'bhatfaheem'
+    console.log("user Dta :",user);
     await connectDB()
+
     const userDoc = await UserProfile.findOneAndUpdate(
-      { username: Fake_username },
+      { username:user.username},
       {
         $push: {
           links: { title: user.linkTitle, url: user.linkUrl },
@@ -50,6 +50,6 @@ export async function POST(req){
     
       console.log(userDoc);
 
-      return NextResponse.json({status:200},{user_data:userDoc})
+      return NextResponse.json({user_data:userDoc})
 
 }

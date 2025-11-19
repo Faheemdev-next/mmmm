@@ -6,10 +6,12 @@ import { Flower } from "lucide-react";
 import { Trash } from "lucide-react";
 import { Pencil } from "lucide-react";
 import { Plus } from "lucide-react";
+import { Iphone } from "./ui/iphone";
 
 const LinkPage = ({user}) => {
   const [UserData, setUserData] = useState(user)
   const [formData, setformData] = useState({
+    username:user.username,
     linkTitle:"",
     linkUrl:""
   })
@@ -24,7 +26,7 @@ const LinkPage = ({user}) => {
     console.log(l)
     const res = await fetch('/api/onboard',{
       method:'DELETE',
-      body:JSON.stringify({username:UserData.username,link:l})
+      body:JSON.stringify({username:UserData.username, link:l})
     })
     if(res.ok){
       const data = await res.json()
@@ -48,20 +50,21 @@ else alert("please enter something")
   }
   return (
     <div className="w-full min-h-screen p-5 flex flex-col gap-5">
-      <UserProfile/>
+      <UserProfile user={UserData}/>
       <div>
       <div role="alert" className="alert alert-success">
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
-  <span>Your Website Is Not Live!</span>
+  <span>Your Website Is  Live!</span>
+  <button className="btn">Copy Link</button>
 </div>
       </div>
       <div>
 
 <div className="w-full flex justify-center">
 
-<button className="btn btn-dash w-1/2" onClick={()=>document.getElementById('my_modal_1').showModal()}>Add Link</button>
+<button className="btn w-1/2" onClick={()=>document.getElementById('my_modal_1').showModal()}>Add Link</button>
 </div>
 <dialog id="my_modal_1" className="modal">
   <div className="modal-box">
@@ -114,15 +117,8 @@ else alert("please enter something")
   
 </ul>
       </div>
-      <div className="w-full flex flex-col gap-2  items-center justify-center">
-      <h1 className="text-4xl font-bold">Preview</h1>
-
-      <div className="mockup-phone ">
-  <div className="mockup-phone-camera"></div>
-  <div className="mockup-phone-display text-white grid place-content-center bg-neutral-900">
-    It's Glowtime.
-  </div>
-</div>
+      <div className="mx-auto md:w-1/2 w-full h-[500px] border rounded-2xl md:h-screen ">
+<iframe src={`${process.env.NEXT_PUBLIC_BASE_URL}/zentro/${user.username}`} className="w-full h-full rounded-2xl" frameborder="0"></iframe>
       </div>
 
     

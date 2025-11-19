@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -8,12 +8,38 @@ import {
   IconBrandGoogle,
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
-export default function signIn() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
+export default function login() {
+  const [formData, setformData] = useState({
+    
+    email:"",
+    password:""
+
+  })
+  const handleChange = (e)=>{
+    const {name,value}= e.target
+    setformData((prev)=>({
+      ...prev,
+      [name]:value
+    }))
+  }
+  const router = useRouter()
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    if(!formData.email && !formData.password) return alert('please enter email')
+    const res = await fetch('/api/login',{
+      method:"POST",
+      body:JSON.stringify({user:formData})
+    })
+    if(res.ok){
+      router.push('/dashboard')
+
+      
+    }
+  }
+
   return (
     <div className="flex w-full h-screen items-center justify-center p-5 ">
 
@@ -30,11 +56,11 @@ export default function signIn() {
         
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" name='email' value={formData.email} onChange={handleChange} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" name='password' value={formData.password} onChange={handleChange} />
         </LabelInputContainer>
      
 
